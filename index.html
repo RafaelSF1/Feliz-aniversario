@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para o Meu Amor ❤️</title>
+    <!-- Fontes do Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Biblioteca de Confetes -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 30px;
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            max-width: 420px;
+            width: 100%;
+            position: relative;
+            z-index: 10;
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 38px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        p.subtitulo {
+            font-size: 15px;
+            font-weight: 300;
+            margin-bottom: 20px;
+            opacity: 0.95;
+            line-height: 1.4;
+        }
+
+        /* Estilo da Foto/Slide */
+        .photo-container {
+            width: 100%;
+            height: 380px;
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            background: rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .photo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .photo-caption {
+            font-size: 15px;
+            margin-bottom: 20px;
+            font-weight: 400;
+            min-height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn {
+            background: #fff;
+            color: #ff4b6e;
+            border: none;
+            padding: 12px 28px;
+            font-size: 15px;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 75, 110, 0.3);
+        }
+
+        .btn:hover {
+            background: #ff4b6e;
+            color: #fff;
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        /* Mensagem final */
+        .final-message {
+            display: none;
+            animation: slideUp 0.8s ease forwards;
+        }
+
+        .final-message p {
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            font-weight: 400;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Corações de fundo */
+        .heart-particle {
+            position: fixed;
+            bottom: -20px;
+            font-size: 20px;
+            user-select: none;
+            pointer-events: none;
+            z-index: 1;
+            animation: floatUp linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-105vh) rotate(360deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <div id="inicio-view">
+            <h1>Feliz Aniversário, meu amor! 🎉</h1>
+            <p class="subtitulo">Preparei uma retrospectiva com 9 momentos especiais nossos. Clique abaixo para começar!</p>
+            <button class="btn" onclick="iniciarSlides()">Ver Lembranças ❤️</button>
+        </div>
+
+        <div id="slides-view" style="display: none;">
+            <h1 id="titulo-topo">Nossos Momentos ✨</h1>
+            <div class="photo-container">
+                <img id="foto-slide" src="" alt="Foto do casal">
+            </div>
+            <p id="legenda-slide" class="photo-caption"></p>
+            <button class="btn" id="btn-proximo" onclick="proximaFoto()">Próxima foto ➡️</button>
+        </div>
+
+        <div id="mensagem-final" class="final-message">
+            <h1>Te Amo Muito! 💖</h1>
+            <p>
+                Você é a melhor coisa da minha vida. Obrigado por cada sorriso, cada passeio, cada conversa e por todos os momentos incríveis ao seu lado.<br><br>
+                Que o seu dia seja maravilhoso e que o seu novo ano venha repleto de conquistas. Estou sempre aqui com você! 👩‍❤️‍👨✨
+            </p>
+        </div>
+    </div>
+
+    <script>
+        const slides = [
+            {
+                url: "fotos/foto1.jpg",
+                legenda: "Aquele seu sorriso lindo que ilumina tudo ❤️"
+            },
+            {
+                url: "fotos/foto2.jpg",
+                legenda: "Cada passeio e momento ao seu lado é inesquecível ✨"
+            },
+            {
+                url: "fotos/foto3.jpg",
+                legenda: "Amo o nosso jeito brincalhão e as nossas risadas 🤪"
+            },
+            {
+                url: "fotos/foto4.jpg",
+                legenda: "Minha melhor companhia para todos os lugares e viagens 🌄"
+            },
+            {
+                url: "fotos/foto5.jpg",
+                legenda: "Sempre juntos, de mãos dadas em cada momento 💖"
+            },
+            {
+                url: "fotos/foto6.jpg",
+                legenda: "Celebrando a vida e criando memórias lindas 🥂"
+            },
+            {
+                url: "fotos/foto7.jpg",
+                legenda: "Aproveitando cada dia de sol e alegrias com você ☀️"
+            },
+            {
+                url: "fotos/foto8.jpg",
+                legenda: "Parceiros para todas as horas e momentos da vida 🚗❤️"
+            },
+            {
+                url: "fotos/foto9.jpg",
+                legenda: "Tranquila igual um furacão... e eu amo tudo em você! 💖"
+            }
+        ];
+
+        let indiceAtual = 0;
+
+        function iniciarSlides() {
+            document.getElementById("inicio-view").style.display = "none";
+            document.getElementById("slides-view").style.display = "block";
+            atualizarSlide();
+        }
+
+        function atualizarSlide() {
+            const foto = document.getElementById("foto-slide");
+            const legenda = document.getElementById("legenda-slide");
+            
+            foto.src = slides[indiceAtual].url;
+            legenda.innerText = slides[indiceAtual].legenda;
+
+            if (indiceAtual === slides.length - 1) {
+                document.getElementById("btn-proximo").innerText = "Ver Mensagem Final ❤️";
+            }
+        }
+
+        function proximaFoto() {
+            indiceAtual++;
+            if (indiceAtual < slides.length) {
+                atualizarSlide();
+            } else {
+                document.getElementById("slides-view").style.display = "none";
+                document.getElementById("mensagem-final").style.display = "block";
+                dispararConfetes();
+            }
+        }
+
+        function criarCoracao() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart-particle');
+            const simbolos = ['❤️', '💖', '✨', '🌸', '💕'];
+            heart.innerText = simbolos[Math.floor(Math.random() * simbolos.length)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 3 + 4 + 's';
+            heart.style.fontSize = Math.random() * 15 + 15 + 'px';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 7000);
+        }
+        setInterval(criarCoracao, 400);
+
+        function dispararConfetes() {
+            confetti({
+                particleCount: 150,
+                spread: 80,
+                origin: { y: 0.6 }
+            });
+        }
+    </script>
+</body>
+</html>
